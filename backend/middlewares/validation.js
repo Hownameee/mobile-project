@@ -1,4 +1,4 @@
-export default function validation (schema) {
+export default function validation(schema) {
   return function (req, res, next) {
     try {
       schema.parse(req.body);

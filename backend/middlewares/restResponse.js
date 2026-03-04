@@ -1,25 +1,43 @@
 export default function restResponse(req, res, next) {
   res.unauthorized = () => {
     res.status(401).json({
-      message: 'Unathorized',
+      success: false,
+      data: null,
+      message: "Unathorized",
     });
   };
 
   res.notFound = () => {
     res.status(404).json({
-      message: 'Not found',
+      success: false,
+      data: null,
+      message: "Not found",
     });
   };
 
-  res.created = () => {
+  res.created = (data = null, message = "Created") => {
     res.status(201).json({
-      message: 'Created',
+      success: true,
+      data: data,
+      message: message,
     });
   };
 
-  res.ok = (data) => {
-    res.status(200).json(data);
-  }
+  res.ok = (data, message = null) => {
+    res.status(200).json({
+      success: true,
+      data: data,
+      message: message,
+    });
+  };
+
+  res.violate = (data = null, message = null) => {
+    res.status(409).json({
+      success: false,
+      data: data,
+      message: message,
+    });
+  };
 
   next();
 }

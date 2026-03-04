@@ -3,6 +3,8 @@ import { initDatabase } from "./utils/db/init.js";
 import restResponse from "./middlewares/restResponse.js";
 import notFound from "./middlewares/notFound.js";
 import errorHandler from "./middlewares/errorHandler.js";
+import bodyParser from "body-parser";
+import cors from "cors";
 
 const app = express();
 initDatabase();
