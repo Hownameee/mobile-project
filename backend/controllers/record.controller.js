@@ -1,0 +1,25 @@
+import recordService from "../services/record.service.js";
+
+const recordController = {
+  getList: async function (req, res) {
+    const userId = req.params.userId;
+    const data = await recordService.getList(userId);
+    res.ok(data);
+  },
+
+  getRecord: async function (req, res) {
+    const userId = req.params.userId;
+    const recordId = req.params.recordId;
+    const data = await recordService.getRecord(userId, recordId);
+    res.ok(data);
+  },
+
+  createRecord: async function (req, res) {
+    const userId = req.params.userId;
+    const recordData = req.body;
+    await recordService.createRecord(userId, recordData);
+    res.created();
+  }
+};
+
+export default recordController;
