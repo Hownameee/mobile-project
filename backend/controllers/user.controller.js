@@ -1,23 +1,48 @@
-import * as userRepo from "../repo/user.repo.js";
+import userService from "../services/user.service.js"; // Đã thêm .js
 
-const controller = {
-  getAllUsers: async function(req, res) {
-    const { offset, limit } = req.query;
-    const users = await userRepo.getAllUsers(offset, limit);
-    res.ok(users, "Users founded successfully");
+const userController = {
+  getAllUsers: async function (req, res, next) {
+    try {
+      const offset = parseInt(req.query.offset) || 0;
+      const limit = parseInt(req.query.limit) || 10;
+      
+      // Đã thêm await
+      const users = await userService.getAllUsers(offset, limit);
+      res.ok(users, "Users fetched successfully");
+    } catch (error) {
+      next(error);
+    }
   },
-  getUserById: async function(req, res) {
-    const { user_id } = req.params.id;
-    const user = await userRepo.getUserByID(user_id);
-    
-    if (!user) res.notFound();
-    res.ok(user, "User founded successfully");
+
+  getUserById: async function (req, res, next) {
+    try {
+      const user_id = req.params.id;
+      // Đã thêm await
+      const user = await userService.getUserById(user_id);
+      
+      res.ok(user, "User fetched successfully");
+    } catch (error) {
+      if (error.message === "User not found") {
+        return res.notFound();
+      }
+      next(error);
+    }
   },
-  createUser: async function(req, res) {
-    const user = req.body;
-    const row_id = await userRepo.createUser(user);
-    res.ok({row_id: row_id}, "Created user successfully");
-  },
+
+  updateUser: async function (req, res, next) {
+    try {
+      const user_id = req.params.id;
+      const updateData = req.body;
+      
+      await userService.updateUser(user_id, updateData);
+      res.ok(null, "User updated successfully");
+    } catch (error) {
+      if (error.message === "User not found") return res.notFound();
+      if (error.message === "No data updated") return res.violate(null, error.message);
+      
+      next(error);
+    }
+  }
 };
 
-export default controller;
+export default userController;

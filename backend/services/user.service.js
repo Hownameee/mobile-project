@@ -1,4 +1,4 @@
-import userRepo from "../repo/user.repo.js"; // Đã sửa import
+import userRepo from "../repo/user.repo.js";
 import bcrypt from "bcrypt";
 import config from "../config/config.js";
 
@@ -17,7 +17,6 @@ const userService = {
     const existing_user = await userRepo.getUserByEmail(userData.email);
     if (existing_user) throw new Error("Email already exists");
 
-    // Đã sửa cú pháp: Truyền thẳng SALT_ROUNDS vào hàm hash rất gọn
     const hashed_password = await bcrypt.hash(userData.password, config.SALT_ROUNDS);
     
     return await userRepo.createUser({
@@ -51,7 +50,8 @@ const userService = {
   },
 
   changePassword: async function(user_id, old_password, new_password) {
-    const user = userRepo.getUserAuthById(user_id);
+    // Đã thêm await ở đây cho đồng bộ với các hàm trên
+    const user = await userRepo.getUserAuthById(user_id);
     if (!user) throw new Error("User not found");
 
     const isMatch = await bcrypt.compare(old_password, user.password_hash);
@@ -59,7 +59,8 @@ const userService = {
 
     const new_password_hash = await bcrypt.hash(new_password, config.SALT_ROUNDS);
 
-    return userRepo.updatePassword(user_id, new_password_hash);
+    // Đã thêm await ở đây
+    return await userRepo.updatePassword(user_id, new_password_hash);
   }
 };
 

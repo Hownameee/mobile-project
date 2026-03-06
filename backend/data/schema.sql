@@ -13,8 +13,12 @@ CREATE TABLE IF NOT EXISTS RECORD (
 );
 
 CREATE TABLE IF NOT EXISTS USERS (
-  -- sign-up information
   user_id INTEGER PRIMARY KEY AUTOINCREMENT,
+  role TEXT DEFAULT 'user' CHECK (
+    role IN ('user', 'admin')
+  ),
+
+  -- sign-up information
   user_name TEXT NOT NULL,
   full_name TEXT NOT NULL,
   email TEXT NOT NULL UNIQUE,
