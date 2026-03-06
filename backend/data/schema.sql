@@ -11,3 +11,30 @@ CREATE TABLE IF NOT EXISTS RECORD (
     calories_burned INTEGER,
     heart_rate_avg INTEGER
 );
+
+CREATE TABLE IF NOT EXISTS USERS (
+  -- sign-up information
+  user_id INTEGER PRIMARY KEY AUTOINCREMENT,
+  user_name TEXT NOT NULL,
+  full_name TEXT NOT NULL,
+  email TEXT NOT NULL UNIQUE,
+  password_hash TEXT NOT NULL,
+  birthdate DATETIME NOT NULL,
+
+  -- extra information (profile)
+  avatar_url TEXT,
+  nationality TEXT,
+  address TEXT, -- "street, ward, province / city, country"
+  height_cm REAL,
+  weight_kg REAL,
+  shirt_size TEXT CHECK (
+    shirt_size IN (
+      '2XS', 'XS', 'S', 'M',
+      'L', 'XL', '2XL', '3XL', '4XL', '5XL'
+    )
+  ),
+
+  -- timestamps
+  created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+  updated_at DATETIME
+);
