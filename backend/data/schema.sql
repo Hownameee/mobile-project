@@ -67,3 +67,6 @@ CREATE TABLE IF NOT EXISTS FOLLOW (
 -- Indexes for efficient cursor-based pagination on FOLLOW
 CREATE INDEX IF NOT EXISTS idx_follow_following ON FOLLOW(following_id, created_at);
 CREATE INDEX IF NOT EXISTS idx_follow_follower ON FOLLOW(follower_id, created_at);
+
+-- Index for efficient cursor-based pagination on POST
+CREATE INDEX IF NOT EXISTS idx_post_created_at ON POST(created_at);

@@ -6,6 +6,7 @@ import errorHandler from "./middlewares/errorHandler.js";
 import bodyParser from "body-parser";
 import cors from "cors";
 import followRoutes from "./routes/follow.route.js";
+import postRoutes from "./routes/post.route.js";
 
 const app = express();
 initDatabase();
@@ -16,6 +17,7 @@ app.use(restResponse);
 
 // routes here
 app.use(followRoutes);
+app.use(postRoutes);
 
 app.use(notFound);
 app.use(errorHandler);
