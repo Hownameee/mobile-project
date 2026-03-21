@@ -1,0 +1,8 @@
+<resources>
+    <string name="distance">Distance</string>
+    <string name="duration">Duration</string>
+    <string name="speed">Speed</string>
+    <string name="content_description_mini_map">Mini map of distance</string>
+    <string name="calories">Calories</string>
+    <string name="heart_rate">Heart rate</string>
+</resources>

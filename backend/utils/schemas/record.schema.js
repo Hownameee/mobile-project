@@ -1,17 +1,14 @@
-import { z } from "zod";
+import { z } from 'zod';
 
 export const recordSchema = z.object({
-  activityType: z.enum(["Walking", "Running"], {
+  activityType: z.enum(['Walking', 'Running'], {
     errorMap: () => ({
       message: "Activity type must be 'Walking' or 'Running'",
     }),
   }),
-  startTime: z
-    .iso
-    .datetime({ message: "Invalid startTime format (ISO 8601)" }),
-  endTime: z
-    .iso
-    .datetime({ message: "Invalid endTime format (ISO 8601)" })
+  startTime: z.iso.datetime({ message: 'Invalid startTime format (ISO 8601)' }),
+  endTime: z.iso
+    .datetime({ message: 'Invalid endTime format (ISO 8601)' })
     .optional(),
   duration: z.number().int().positive(),
   distance: z.number().nonnegative(),

@@ -1,5 +1,5 @@
-import z from "zod";
+import z from 'zod';
 
 export const userIdSchema = z.object({
-    userId: z.coerce.number().positive(),
+  userId: z.coerce.number().positive(),
 });

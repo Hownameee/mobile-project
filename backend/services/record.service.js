@@ -1,4 +1,4 @@
-import recordRepo from "../repo/record.repo.js";
+import recordRepo from '../repo/record.repo.js';
 
 const recordService = {
   getList: async function (userId, offset = 0, quantity = 10) {
@@ -17,7 +17,7 @@ const recordService = {
     if (!recordData.endTime) {
       recordData.endTime = new Date()
         .toISOString()
-        .replace("T", " ")
+        .replace('T', ' ')
         .substring(0, 19);
     }
     return await recordRepo.create(userId, recordData);

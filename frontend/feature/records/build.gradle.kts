@@ -1,22 +1,19 @@
 plugins {
-    alias(libs.plugins.android.application)
+    alias(libs.plugins.android.library)
     alias(libs.plugins.hilt)
 }
 
 android {
-    namespace = "com.grouprace.gorace"
+    namespace = "com.grouprace.feature.records"
     compileSdk {
         version = release(36)
     }
 
     defaultConfig {
-        applicationId = "com.grouprace.gorace"
         minSdk = 29
-        targetSdk = 36
-        versionCode = 1
-        versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles("consumer-rules.pro")
     }
 
     buildTypes {
@@ -35,20 +32,15 @@ android {
 }
 
 dependencies {
+    implementation(project(":core:model"))
+    implementation(project(":core:data"))
     implementation(libs.appcompat)
     implementation(libs.material)
-    implementation(libs.activity)
-    implementation(libs.constraintlayout)
-
-    implementation(project(":feature:tracking"))
-    implementation(project(":feature:posts"))
-    implementation(project(":core:data"))
-    implementation(project(":core:network"))
-    implementation(libs.hilt.android)
-    annotationProcessor(libs.hilt.compiler)
-    implementation(project(":feature:records"))
-
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
+
+    // Hilt
+    implementation(libs.hilt.android)
+    annotationProcessor(libs.hilt.compiler)
 }
